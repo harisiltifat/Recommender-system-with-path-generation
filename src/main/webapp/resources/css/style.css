@@ -1,0 +1,174 @@
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    background: #f7f7f7;
+    padding: 0;
+    margin: 0;
+    color: #646464;
+}
+
+#wrapper {
+    width: 750px;
+    margin: auto;
+}
+
+#content {
+    position: relative;
+    background-color: white;
+    width: 590px;
+    margin: 30px auto 30px auto;
+    padding: 30px 60px 60px 60px;
+    border: 1px solid #d2d2d2;
+}
+
+header {
+    text-align: center;
+}
+
+header blockquote {
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.4;
+    padding: 0 10px 0 10px;
+    margin: 25px 15px 40px 15px;
+}
+
+h1, h2 {
+    color: #333333;
+    font-weight: 700;
+}
+
+h1 {
+    padding: 0 100px 0 100px;
+    font-size: 52px;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #b7b7b7;
+}
+
+label {
+    display: block;
+    clear: both;
+    margin: 20px 0 20px 0;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #59a6d6;
+    outline: none;
+}
+
+a:hover {
+    color: #646464;
+}
+
+:focus {
+    -moz-outline-style: none;
+}
+
+.rating-c .br-widget {
+    height: 40px;
+}
+
+
+.rating-c .br-widget a {
+    background-color: #E3E3E3;
+    color: #B6B6B6;
+    display: block;
+    float: left;
+    font-size: 13px;
+    font-weight: 400;
+    height: 28px;
+    line-height: 2;
+    margin: 6px;
+    text-align: center;
+    text-decoration: none;
+    width: 28px;
+}
+
+.rating-c .br-widget a.br-active,
+.rating-c .br-widget a.br-selected {
+    background-color: #59a6d6;
+    color: white;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio : 1.5),
+(min-resolution: 192dpi) {
+    .rating-f .br-widget a {
+        background: url('../img/star@2x.png');
+        background-size: 24px 48px;
+    }
+}
+
+.savebutton {
+	-moz-box-shadow:inset 0px 0px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 0px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 0px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	background-color:#79bbff;
+	-webkit-border-top-left-radius:37px;
+	-moz-border-radius-topleft:37px;
+	border-top-left-radius:37px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:37px;
+	-moz-border-radius-bottomright:37px;
+	border-bottom-right-radius:37px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:1.31px;
+	border:2px solid #84bbf3;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	font-style:italic;
+	height:23px;
+	line-height:23px;
+	width:59px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:0px 0px 0px #528ecc;
+	float:right;
+	cursor:pointer;
+}
+.savebutton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	background-color:#378de5;
+}.savebutton:active {
+	position:relative;
+	top:1px;
+}
+/* This button was generated using CSSButtonGenerator.com */
+
+  #source {
+        top: 0px;
+        left: 0px;
+        width: 50%;
+      }
+	   #destination {
+        top: 0px;
+        left: 0px;
+        width: 50%;
+      }
