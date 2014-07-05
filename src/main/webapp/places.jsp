@@ -49,7 +49,14 @@
 			</c:forEach>
 		</div>-->
 		
-		<div id="content">
+		<div id="lstPlaces">
+    	<h2>Categorised Places with Final Popularity Score </h2>
+    		<c:forEach var="places" items="${lstplaces}">
+    			<b>${places.name}</b><br>
+			</c:forEach>		
+		</div>
+		
+		<%-- <div id="content">
     	<h2>Categorised Places with Final Popularity Score </h2>
     		<c:forEach var="outermap" items="${finalScoredPlacesWithCat}">
     			<b>${outermap.key}</b><br>
@@ -58,7 +65,7 @@
     				<b>Score:</b> ${innermap.value}<br/>
     			</c:forEach>		
 			</c:forEach>		
-		</div>
+		</div> --%>
 	</div>	
 </body>
 

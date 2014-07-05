@@ -1,6 +1,8 @@
 package de.tum.in.aics.thesis.project.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,13 +104,34 @@ public class PlacesController {
 		finalScoredPlacesWithCat = placesService.clusterPlaces(finalScoredPlaces);
 		finalScoredPlacesWithCat = placesService.sortPlacesByScore(finalScoredPlacesWithCat);
 		
+		List<Place> lstplaces=ConvertMapToList(finalScoredPlacesWithCat);
 		ModelAndView model = new ModelAndView("places");
 		//model.addObject("scoredPlacesByMaxCheckins", scoredPlacesByMaxCheckins);
 		//model.addObject("scoredPlacesByMaxLikes", scoredPlacesByMaxLikes);
 		//model.addObject("scoredPlacesByMaxRating", scoredPlacesByMaxRating);
 		//model.addObject("scoredPlacesByOpeningTime", scoredPlacesByOpeningTime);
-		model.addObject("finalScoredPlacesWithCat", finalScoredPlacesWithCat);
+		//model.addObject("finalScoredPlacesWithCat", finalScoredPlacesWithCat);
+		model.addObject("lstplaces", lstplaces);
 		return model;
+	}
+	
+	private List<Place> ConvertMapToList(
+			Map<String, Map<Place, Float>> finalScoredPlacesWithCat) {
+		List<Place> lstplaces=new ArrayList<Place>();
+		Iterator outerIterator = finalScoredPlacesWithCat.entrySet().iterator();
+	    while (outerIterator.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)outerIterator.next();
+	        Map outerPlacesMap=(Map) pairs.getValue();
+	        Iterator innterIteratorPlaces = outerPlacesMap.entrySet().iterator();
+	        while (innterIteratorPlaces.hasNext()) {
+	        	 Map.Entry pairs2 = (Map.Entry)innterIteratorPlaces.next();
+	        	 Float rating=(Float) pairs2.getValue();
+	        	 Place place=(Place)pairs2.getKey();
+	        	 place.setRating(rating);
+	        	 lstplaces.add(place);
+	        }
+	    }
+	    return lstplaces;
 	}
 	
 }
