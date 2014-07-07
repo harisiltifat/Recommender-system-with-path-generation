@@ -52,7 +52,12 @@
 		<div id="lstPlaces">
     	<h2>Categorised Places with Final Popularity Score </h2>
     		<c:forEach var="places" items="${lstplaces}">
-    			<b>${places.name}</b><br>
+    		<table><tr>
+    			<td><b>${places.name}</b></td>
+    			<td>${places.types}</td>
+    			<td>${places.rating}</td>
+    			</tr>
+    		</table>
 			</c:forEach>		
 		</div>
 		
@@ -65,7 +70,7 @@
     				<b>Score:</b> ${innermap.value}<br/>
     			</c:forEach>		
 			</c:forEach>		
-		</div> --%>
+		</div>  --%>
 	</div>	
 </body>
 

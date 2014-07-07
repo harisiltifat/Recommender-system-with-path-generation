@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import de.tum.in.aics.thesis.project.algorithms.implementations.*;
+import de.tum.in.aics.thesis.project.algorithms.interfaces.IPathFindAlgorithm;
 import de.tum.in.aics.thesis.project.models.Location;
 import de.tum.in.aics.thesis.project.models.Place;
 import de.tum.in.aics.thesis.project.models.UsersLocation;
@@ -69,13 +71,17 @@ public class PlacesController {
 		
 		int currentLocationId = (Integer) WebUtils.getSessionAttribute(request, "locationId");
 		List<UsersLocation> currentLocation = locationService.findCurrentLocation(currentLocationId);
+		UsersLocation loc=null;
 		if(!currentLocation.isEmpty()){
-			UsersLocation loc = currentLocation.get(0);
+			loc = currentLocation.get(0);
 			SOURCE_LAT = loc.getSourcelat();
 			SOURCE_LNG = loc.getSourcelong();
 			DESTINATION_LAT = loc.getDestinationlat();
 			DESTINATION_LNG = loc.getDestinationlong();
 		}
+		Location sourceLoc=new Location(loc.getSourcelat(),loc.getSourcelong());
+		Location destLoc= new Location(loc.getDestinationlat(),loc.getDestinationlong());
+		
 		List<Place> places = searchService.explore(new Location(SOURCE_LAT,SOURCE_LNG), new Location(DESTINATION_LAT,DESTINATION_LNG));	
 	
 		categorizedPlaces = placesService.categorize(places);
@@ -105,13 +111,16 @@ public class PlacesController {
 		finalScoredPlacesWithCat = placesService.sortPlacesByScore(finalScoredPlacesWithCat);
 		
 		List<Place> lstplaces=ConvertMapToList(finalScoredPlacesWithCat);
+		IPathFindAlgorithm algo=new PathFind_DijkstraDivImpl();
+		
+	    List<Place> lstPath= algo.findPath(sourceLoc, destLoc, lstplaces, 0, 0);
 		ModelAndView model = new ModelAndView("places");
 		//model.addObject("scoredPlacesByMaxCheckins", scoredPlacesByMaxCheckins);
 		//model.addObject("scoredPlacesByMaxLikes", scoredPlacesByMaxLikes);
 		//model.addObject("scoredPlacesByMaxRating", scoredPlacesByMaxRating);
 		//model.addObject("scoredPlacesByOpeningTime", scoredPlacesByOpeningTime);
 		//model.addObject("finalScoredPlacesWithCat", finalScoredPlacesWithCat);
-		model.addObject("lstplaces", lstplaces);
+		model.addObject("lstplaces", lstPath);
 		return model;
 	}
 	

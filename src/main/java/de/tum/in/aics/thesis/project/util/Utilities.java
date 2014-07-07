@@ -11,25 +11,25 @@ public class Utilities {
 
 	static Location midloc = new Location(0, 0);
 
-	public Location midPoint(Location loc1, Location loc2) {
+	public static Location midPoint(Location loc1, Location loc2) {
 		
-		double dLon = Math.toRadians(loc2.lng - loc1.lng);
-		double lat1 = Math.toRadians(loc1.lat);
-		double lat2 = Math.toRadians(loc2.lat);
-		double lng1 = Math.toRadians(loc1.lng);
+		double dLon = Math.toRadians(loc2.getLng() - loc1.getLng());
+		double lat1 = Math.toRadians(loc1.getLat());
+		double lat2 = Math.toRadians(loc2.getLat());
+		double lng1 = Math.toRadians(loc1.getLng());
 
 		double Bx = Math.cos(lat2) * Math.cos(dLon);
 		double By = Math.cos(lat2) * Math.sin(dLon);
-		midloc.lat = Math.atan2(Math.sin(lat1) + Math.sin(lat2),Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
-		midloc.lng = lng1 + Math.atan2(By, Math.cos(lat1) + Bx);
-		midloc.lat = Math.toDegrees(midloc.lat);
-		midloc.lng = Math.toDegrees(midloc.lng);
+		midloc.setLat(Math.atan2(Math.sin(lat1) + Math.sin(lat2),Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By)));
+		midloc.setLng(lng1 + Math.atan2(By, Math.cos(lat1) + Bx));
+		midloc.setLat(Math.toDegrees(midloc.getLat()));
+		midloc.setLng(Math.toDegrees(midloc.getLng()));
 		return midloc;
 	}
 
-	public double distance(Location loc1, Location loc2, char unit) {
-		double theta = loc1.lng - loc2.lng;
-		double dist = Math.sin(deg2rad(loc1.lat)) * Math.sin(deg2rad(loc2.lat)) + Math.cos(deg2rad(loc1.lat)) * Math.cos(deg2rad(loc2.lat)) * Math.cos(deg2rad(theta));
+	public static double distance(Location loc1, Location loc2, char unit) {
+		double theta = loc1.getLng() - loc2.getLng();
+		double dist = Math.sin(deg2rad(loc1.getLat())) * Math.sin(deg2rad(loc2.getLat())) + Math.cos(deg2rad(loc1.getLat())) * Math.cos(deg2rad(loc2.getLat())) * Math.cos(deg2rad(theta));
 		dist = Math.acos(dist);
 		dist = rad2deg(dist);
 		dist = dist * 60 * 1.1515;
@@ -49,7 +49,7 @@ public class Utilities {
 		return (rad * 180.0 / Math.PI);
 	}
 
-	public List<Place> mergeList(List<Place> allList, List<Place> list) {
+	public static List<Place> mergeList(List<Place> allList, List<Place> list) {
 		List<Place> tmpList = new ArrayList<Place>();
 		for (Place place : list) {
 			boolean exist = false;
@@ -65,7 +65,7 @@ public class Utilities {
 		return allList;
 	}
 	
-	public float round(float d, int decimalPlace) {
+	public static float round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
