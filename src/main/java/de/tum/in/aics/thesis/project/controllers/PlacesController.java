@@ -112,7 +112,7 @@ public class PlacesController {
 		
 		List<Place> lstplaces=ConvertMapToList(finalScoredPlacesWithCat);
 		IPathFindAlgorithm algo=new PathFind_DijkstraDivImpl();
-		
+		System.out.println(lstplaces.get(0).getGeometry());
 	    List<Place> lstPath= algo.findPath(sourceLoc, destLoc, lstplaces, 0, 0);
 		ModelAndView model = new ModelAndView("places");
 		//model.addObject("scoredPlacesByMaxCheckins", scoredPlacesByMaxCheckins);

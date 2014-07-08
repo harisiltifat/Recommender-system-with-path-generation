@@ -173,6 +173,17 @@ public class FourSquarePlaces {
 
 				place.setGeometry(venueJsonObj.getJSONObject("location").toString());
 				
+				try {
+					JSONObject geometryJsonObj;
+					geometryJsonObj = new JSONObject(place.getGeometry());
+					place.setLongitude(Double.parseDouble(geometryJsonObj.getString("lng")));
+					place.setLatitude(Double.parseDouble(geometryJsonObj.getString("lat")));
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				JSONArray catgoryJsonArray = venueJsonObj.getJSONArray("categories");
 				StringBuilder categories = new StringBuilder();
 				for (int j = 0; j < catgoryJsonArray.length(); j++) {
