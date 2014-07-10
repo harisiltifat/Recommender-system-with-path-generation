@@ -1,8 +1,5 @@
 package de.tum.in.aics.thesis.project.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Place {
 	//private String reference;
 	private String name;
@@ -14,6 +11,8 @@ public class Place {
 	private boolean openNow;
 	//private String price_level;
 	private float rating;
+	private Integer ratingVotes;
+	
 	private String types;
 	//private String vicinity;
 	private Integer stats; 
@@ -28,30 +27,6 @@ public class Place {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/*public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public String getFormatted_address() {
-		return formatted_address;
-	}
-
-	public void setFormatted_address(String formatted_address) {
-		this.formatted_address = formatted_address;
-	}
-
-	public String getFormatted_phone_number() {
-		return formatted_phone_number;
-	}
-
-	public void setFormatted_phone_number(String formatted_phone_number) {
-		this.formatted_phone_number = formatted_phone_number;
-	}*/
 
 	public String getGeometry() {
 		return geometry;
@@ -69,24 +44,6 @@ public class Place {
 		this.openNow = openNow;
 	}
 
-	/*public String getOpening_hours() {
-		return opening_hours;
-	}
-
-	public void setOpening_hours(String opening_hours) {
-		this.opening_hours = opening_hours;
-	}
-
-	
-
-	public String getPrice_level() {
-		return price_level;
-	}
-
-	public void setPrice_level(String price_level) {
-		this.price_level = price_level;
-	}*/
-
 	public float getRating() {
 		return rating;
 	}
@@ -103,24 +60,6 @@ public class Place {
 		this.types = types;
 	}
 
-	/*public String getVicinity() {
-		return vicinity;
-	}
-
-	public void setVicinity(String vicinity) {
-		this.vicinity = vicinity;
-	}
-
-
-	
-	public String getReference() {
-		return reference;
-	}
-
-	public void setReference(String reference) {
-		this.reference = reference;
-	}*/
-
 	public Integer getStats() {
 		return stats;
 	}
@@ -136,13 +75,13 @@ public class Place {
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
-
-	public double getLongitude() {
-		return longitude;
+	
+	public Integer getRatingVotes() {
+		return ratingVotes;
 	}
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setRatingVotes(Integer ratingVotes) {
+		this.ratingVotes = ratingVotes;
 	}
 
 	public double getLatitude() {
@@ -152,10 +91,13 @@ public class Place {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	
-	/*@Override
-	public String toString() {
-	    return this.getName() + "=" +  this.getStats();
-	}*/
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 	
 }

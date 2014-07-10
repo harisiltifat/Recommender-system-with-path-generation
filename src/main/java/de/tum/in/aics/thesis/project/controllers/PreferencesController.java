@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
+
+import de.tum.in.aics.thesis.project.models.User;
 import de.tum.in.aics.thesis.project.models.UsersPreferences;
 import de.tum.in.aics.thesis.project.services.interfaces.IPreferencesService;
 
@@ -41,7 +44,8 @@ public class PreferencesController {
 		userPreferences.setNaturePreference(naturePreference);
 		userPreferences.setMusicPreference(musicPreference);
 		userPreferences.setShoppingPreference(shoppingPreference);
-
+		userPreferences.setUser((User) WebUtils.getSessionAttribute(request, "user"));
+		userPreferences.setLocationId((Integer) WebUtils.getSessionAttribute(request, "locationId"));
 		preferencesService.savePreferences(userPreferences);
 		return "redirect:/places"; 
 	}

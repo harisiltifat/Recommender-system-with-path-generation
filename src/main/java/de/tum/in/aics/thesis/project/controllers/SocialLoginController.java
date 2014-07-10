@@ -41,22 +41,6 @@ public class SocialLoginController {
 		}
 		else
 			WebUtils.setSessionAttribute(request, "user", user);
-		//System.out.print(WebUtils.getSessionAttribute(request, "userId"));
-			
-		/*List<Contact> contactsList = new ArrayList<Contact>();
-		contactsList = provider.getContactList();
-		if (contactsList != null && contactsList.size() > 0) {
-			for (Contact p : contactsList) {
-				if (!StringUtils.hasLength(p.getFirstName())
-						&& !StringUtils.hasLength(p.getLastName())) {
-					p.setFirstName(p.getDisplayName());
-				}
-			}
-		}*/
-
-		//ModelAndView mv = new ModelAndView("location");
-		//mv.addObject("profile", provider.getUserProfile());
-		//mv.addObject("contacts", contactsList);
 
 		return "redirect:/location";
 	}

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
-import de.tum.in.aics.thesis.project.models.User;
 import de.tum.in.aics.thesis.project.models.UsersLocation;
 import de.tum.in.aics.thesis.project.services.interfaces.ILocationsService;
 
@@ -34,10 +33,8 @@ public class LocationsController {
 		userLocation.setSourcelong(sourceLng);
 		userLocation.setDestinationlat(destinationLat);
 		userLocation.setDestinationlong(destinationLng);
-		userLocation.setUser((User) WebUtils.getSessionAttribute(request, "user"));
 		int locationId = locationService.saveLocaion(userLocation);	
-		WebUtils.setSessionAttribute(request, "locationId", locationId);
-		
+		WebUtils.setSessionAttribute(request, "locationId", locationId);		
 		return "preferences";
 	}
 }

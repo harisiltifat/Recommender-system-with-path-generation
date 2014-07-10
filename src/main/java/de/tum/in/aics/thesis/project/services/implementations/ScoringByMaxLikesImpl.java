@@ -10,47 +10,46 @@ import org.springframework.stereotype.Component;
 
 import de.tum.in.aics.thesis.project.models.Place;
 import de.tum.in.aics.thesis.project.services.interfaces.IScoringService;
+import de.tum.in.aics.thesis.project.util.Utilities;
 
 @Component
 public class ScoringByMaxLikesImpl implements IScoringService {
 	
+	private final int maxScore = 1;
+	
 	@Override
 	public Map< String , Map<Place, Float> > scorePlaces(Map<String, List<Place>> placesByMaxLikes) {
 		
-		float totalLikesOfCat = 0;
-		float score = 0F;
+		int placeWithMaxLikes = 0;
+		float score = 0;
+		float distanceFromMax = 0;
+
 		Map<Place, Float> placesWithScore = new LinkedHashMap<Place, Float>();
-		Map< String , Map<Place, Float> > scoredPlacesWithCat = new LinkedHashMap<String, Map<Place, Float>>();
+		Map<String, Map<Place, Float>> scoredPlacesWithCat = new LinkedHashMap<String, Map<Place, Float>>();
 
 		for (Entry<String, List<Place>> entry : placesByMaxLikes.entrySet()) {
-			
-			List<Place> places  = entry.getValue();
-			
-			for (Place p : places){
-				//if(placesCounter < TOP_LIMIT){
-					totalLikesOfCat = totalLikesOfCat + p.getLikes();
-					/*placesCounter++;
-				}else {
-					placesCounter = 0;
-					break;
-				}*/
+			List<Place> places = entry.getValue();
+			for (Place p : places) {
+				if (p.getLikes() >= placeWithMaxLikes)
+					placeWithMaxLikes = p.getLikes();
 			}
-			
-			for(Place p : places){
-				//if(scoringCounter < TOP_LIMIT){
-					score = util.round(( p.getLikes() / totalLikesOfCat) , DECIMAL_PLACE);
+
+			for (Place p : places) {
+				if (p.getStats() == placeWithMaxLikes) {
+					score = maxScore;
 					placesWithScore.put(p, score);
-					/*scoringCounter++;
-				}else{
-					scoringCounter = 0;
-					break;
-				}*/
+				} else {
+					distanceFromMax = (placeWithMaxLikes - p.getLikes());
+					score = (distanceFromMax / placeWithMaxLikes);
+					score = Utilities.round((maxScore - score), DECIMAL_PLACE);
+					placesWithScore.put(p, score);
+				}
 			}
-			scoredPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(placesWithScore));
+			scoredPlacesWithCat.put(entry.getKey(),new LinkedHashMap<Place, Float>(placesWithScore));
 			placesWithScore.clear();
-			totalLikesOfCat = 0;
-			//placesCounter = 0;
-			//scoringCounter = 0;
+			placeWithMaxLikes = 0;
+			score = 0;
+			distanceFromMax = 0;
 		}
 		return scoredPlacesWithCat;
 	}

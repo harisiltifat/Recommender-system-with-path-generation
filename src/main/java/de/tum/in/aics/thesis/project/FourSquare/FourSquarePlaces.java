@@ -206,6 +206,10 @@ public class FourSquarePlaces {
 				else 
 					place.setRating(NO_RATING);
 				
+				if(venueJsonObj.has("ratingSignals"))
+					place.setRatingVotes(venueJsonObj.getInt("ratingSignals"));
+				else 
+					place.setRatingVotes(0);
 				resultList.add(place);
 			}
 

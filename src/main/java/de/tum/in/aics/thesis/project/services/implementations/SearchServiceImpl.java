@@ -24,21 +24,21 @@ public class SearchServiceImpl  implements ISearchService {
 		
 		List<Place> allPlaces = new ArrayList<Place>();
 		
-		midloc = util.midPoint(loc1, loc2);
+		midloc = Utilities.midPoint(loc1, loc2);
 		
-		int dist = (int) Math.ceil(util.distance(midloc, loc1, 'K') * 1000);
+		int dist = (int) Math.ceil(Utilities.distance(midloc, loc1, 'K') * 1000);
 
 		String categories = "4d4b7104d754a06370d81259";		
 		List<Place> lstPlace = places.search(midloc.getLat(), midloc.getLng(), dist,categories, 50);
-		util.mergeList(allPlaces, lstPlace);
+		Utilities.mergeList(allPlaces, lstPlace);
 		
 		categories = "4d4b7105d754a06377d81259";
 		List<Place> lstPlace2 = places.search(midloc.getLat(), midloc.getLng(), dist,categories, 50);
-		util.mergeList(allPlaces, lstPlace2);
+		Utilities.mergeList(allPlaces, lstPlace2);
 		
 		categories = "4d4b7105d754a06373d81259,4d4b7105d754a06376d81259,4d4b7105d754a06374d81259";
 		List<Place> lstPlace3 = places.search(midloc.getLat(), midloc.getLng(), dist,categories, 50);
-		util.mergeList(allPlaces, lstPlace3);
+		Utilities.mergeList(allPlaces, lstPlace3);
 
 		return allPlaces;	
 	}
@@ -48,8 +48,8 @@ public class SearchServiceImpl  implements ISearchService {
 		
 		List<Place> explorePlaces = new ArrayList<Place>();
 		
-		midloc = util.midPoint(loc1, loc2);
-		int dist = (int) Math.ceil(util.distance(midloc, loc1, 'K') * 1000);
+		midloc = Utilities.midPoint(loc1, loc2);
+		int dist = (int) Math.ceil(Utilities.distance(midloc, loc1, 'K') * 1000);
 	
 		explorePlaces = places.explore(midloc.getLat(), midloc.getLng(), dist, 100);
 		

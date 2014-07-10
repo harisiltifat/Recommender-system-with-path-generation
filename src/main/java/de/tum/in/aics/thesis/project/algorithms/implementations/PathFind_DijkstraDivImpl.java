@@ -5,21 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-
-
-
-
-
-
 import de.tum.in.aics.thesis.project.models.Location;
 import de.tum.in.aics.thesis.project.models.Place;
 import de.tum.in.aics.thesis.project.algorithms.interfaces.IPathFindAlgorithm;
-import de.tum.in.aics.thesis.project.services.interfaces.ISearchService;
 import de.tum.in.aics.thesis.project.models.Edge;
 import de.tum.in.aics.thesis.project.models.Vertex;
 import de.tum.in.aics.thesis.project.util.Utilities;

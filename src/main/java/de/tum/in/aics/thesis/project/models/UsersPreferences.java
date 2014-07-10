@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,7 @@ public class UsersPreferences implements Serializable{
 	private int naturePreference;
 	private int musicPreference;
 	private int shoppingPreference;
-
+	private int locationId;
 	
 	public UsersPreferences(){}
 	
@@ -82,6 +84,26 @@ public class UsersPreferences implements Serializable{
 
 	public void setPreferenceId(int preferenceId) {
 		this.preferenceId = preferenceId;
+	}
+	
+	@ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+	
+	public void setUser(User user){
+		this.user = user;
+	}
+	
+	public User getUser(){
+		return user;
+	}
+
+	public int getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
 	}
 	
 }

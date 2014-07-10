@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +13,7 @@ import javax.persistence.Table;
 public class UsersLocation implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private int locationId;
 	private double sourcelat;
 	private double sourcelong;
 	private double destinationlat;
@@ -56,27 +55,13 @@ public class UsersLocation implements Serializable{
 	public UsersLocation(){}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int locationId;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)	
 	public int getLocationId() {
 		return locationId;
 	}
 
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
-	}
-
-	@ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
-	
-	public void setUser(User user){
-		this.user = user;
-	}
-	
-	public User getUser(){
-		return user;
 	}
 	
 }
