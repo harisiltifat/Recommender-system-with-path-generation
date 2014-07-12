@@ -10,8 +10,6 @@ public interface IScoringService {
 
 	Utilities util = new Utilities();
 	
-	public static int DECIMAL_PLACE = 2;
-	
 	public static int TOP_LIMIT = 5; 
 
 	public Map<String, Map<Place, Float>> scorePlaces(Map< String, List<Place>> sortedPlaces);

@@ -1,20 +1,13 @@
 package de.tum.in.aics.thesis.project.models;
 
 public class Place {
-	//private String reference;
+
 	private String name;
-	//private String icon;
-	//private String formatted_address;
-	//private String formatted_phone_number;
 	private String geometry;
-	//private String opening_hours;
 	private boolean openNow;
-	//private String price_level;
 	private float rating;
 	private Integer ratingVotes;
-	
 	private String types;
-	//private String vicinity;
 	private Integer stats; 
 	private Integer likes;
 	private double latitude;

@@ -1,6 +1,5 @@
 package de.tum.in.aics.thesis.project.util;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +63,4 @@ public class Utilities {
 		allList.addAll(tmpList);
 		return allList;
 	}
-	
-	public static float round(float d, int decimalPlace) {
-        BigDecimal bd = new BigDecimal(Float.toString(d));
-        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-        return bd.floatValue();
-    }
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import de.tum.in.aics.thesis.project.models.Place;
 import de.tum.in.aics.thesis.project.services.interfaces.IScoringService;
-import de.tum.in.aics.thesis.project.util.Utilities;
 
 @Component
 public class ScoringByMaxCheckinsImpl implements IScoringService {
@@ -20,36 +19,42 @@ public class ScoringByMaxCheckinsImpl implements IScoringService {
 	public Map<String, Map<Place, Float>> scorePlaces(Map<String, List<Place>> placesByMaxCheckins) {
 
 		int placeWithMaxCheckins = 0;
-		float score = 0;
-		float distanceFromMax = 0;
+		float score = 0F;
+		float distanceFromMax = 0F;
 
 		Map<Place, Float> placesWithScore = new LinkedHashMap<Place, Float>();
 		Map<String, Map<Place, Float>> scoredPlacesWithCat = new LinkedHashMap<String, Map<Place, Float>>();
 
 		for (Entry<String, List<Place>> entry : placesByMaxCheckins.entrySet()) {
 			List<Place> places = entry.getValue();
-			for (Place p : places) {
-				if (p.getStats() >= placeWithMaxCheckins)
-					placeWithMaxCheckins = p.getStats();
-			}
-
-			for (Place p : places) {
-				if (p.getStats() == placeWithMaxCheckins) {
-					score = maxScore;
-					placesWithScore.put(p, score);
-				} else {
-					distanceFromMax = (placeWithMaxCheckins - p.getStats());
-					score = (distanceFromMax / placeWithMaxCheckins);
-					score = Utilities.round((maxScore - score), DECIMAL_PLACE);
-					placesWithScore.put(p, score);
+			if(places.size() != 0 && !places.isEmpty()){
+				for (Place p : places) {
+					if (p.getStats() != null && p.getStats() != 0 && p.getStats() >= placeWithMaxCheckins)
+						placeWithMaxCheckins = p.getStats();
 				}
-
+				for (Place p : places) {
+					if(p.getStats() != null && p.getStats() != 0 ){
+						if (p.getStats() == placeWithMaxCheckins) {
+							score = maxScore;
+							placesWithScore.put(p, score);
+						} else {
+							distanceFromMax = (placeWithMaxCheckins - p.getStats());
+							score = (distanceFromMax / placeWithMaxCheckins);
+							score = (maxScore - score);
+							placesWithScore.put(p, score);
+						}
+					}
+					else{
+						score = 0;
+						placesWithScore.put(p, score);
+					}
+				}
+				scoredPlacesWithCat.put(entry.getKey(),new LinkedHashMap<Place, Float>(placesWithScore));
 			}
-			scoredPlacesWithCat.put(entry.getKey(),new LinkedHashMap<Place, Float>(placesWithScore));
 			placesWithScore.clear();
 			placeWithMaxCheckins = 0;
-			score = 0;
-			distanceFromMax = 0;
+			score = 0F;
+			distanceFromMax = 0F;
 		}
 		return scoredPlacesWithCat;
 	}

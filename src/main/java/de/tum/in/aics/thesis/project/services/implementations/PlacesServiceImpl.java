@@ -15,11 +15,13 @@ import java.util.Map.Entry;
 import org.springframework.stereotype.Component;
 
 import de.tum.in.aics.thesis.project.models.Place;
+import de.tum.in.aics.thesis.project.models.UsersPreferences;
 import de.tum.in.aics.thesis.project.services.interfaces.IPlacesService;
 
 @Component
 public class PlacesServiceImpl implements IPlacesService {
 
+	
 	public Map< String, List<Place> > categorize(List<Place> places){
 	
 		Map< String, List<Place>> categorisedPlaces = new HashMap< String, List<Place> >();
@@ -88,23 +90,24 @@ public class PlacesServiceImpl implements IPlacesService {
 		return sortedPlaces;
 	}
 	
-	public Map<Place, Float> mergeScores(Map<Place, Float> maxCheckinsScoredPlaces, Map<Place, Float> maxLikesScoredPlaces,Map<Place, Float> maxRatingScoredPlaces){
+	public Map<Place, Float> mergeScores(Map<Place, Float> maxCheckinsScoredPlaces, Map<Place, Float> maxLikesScoredPlaces,Map<Place, Float> maxRatingScoredPlaces){		
 		
 		Map<Place, Float> finalScoredPlaces = new LinkedHashMap<Place, Float>();
-		Float checkinsScore = 0F , likesScore = 0F , ratingScore = 0F , finalScore;
+		float checkinsScore = 0 , likesScore = 0 , ratingScore = 0 , finalScore;
+		
 		for(Entry<Place, Float> entry : maxCheckinsScoredPlaces.entrySet()){
 			
-			checkinsScore = (float) (entry.getValue() * 0.2);
+			checkinsScore = (float) (entry.getValue());
 			
 			if(maxLikesScoredPlaces.containsKey(entry.getKey()))
-				likesScore = (float) (maxLikesScoredPlaces.get(entry.getKey()) * 0.3);
+				likesScore = (float) (maxLikesScoredPlaces.get(entry.getKey()));
 			else
-				likesScore = 0F;
+				likesScore = 0;
 			
 			if(maxRatingScoredPlaces.containsKey(entry.getKey()))
-				ratingScore = (float) (maxRatingScoredPlaces.get(entry.getKey()) * 0.5);
+				ratingScore = (float) (maxRatingScoredPlaces.get(entry.getKey()));
 			else
-				ratingScore = 0F;
+				ratingScore = 0;
 			
 			finalScore = (float) ( (checkinsScore + likesScore + ratingScore)/3.0);
 			finalScoredPlaces.put(entry.getKey(), finalScore);
@@ -174,4 +177,69 @@ public class PlacesServiceImpl implements IPlacesService {
 		}
 		return sortedScoredPlacesWithCat;		
 	}
+
+	@Override
+	public Map<String, Map<Place, Float>> scaleByPreferences(Map<String, Map<Place, Float>> finalScoredPlacesWithCat, List<UsersPreferences> currentUserPreferences) {
+		
+		float score = 0;
+		Map< String , Map<Place, Float> > scaledPlacesWithCat = new LinkedHashMap<String, Map<Place, Float>>();
+		Map<Place, Float> scaledPlaces = new LinkedHashMap<Place, Float>();
+		
+		for(Entry<String, Map<Place,Float>> entry : finalScoredPlacesWithCat.entrySet() ){
+			
+			if(entry.getKey().equalsIgnoreCase("Museum")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getMuseumPreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			else if(entry.getKey().equalsIgnoreCase("Night life")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getNightlifePreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			else if(entry.getKey().equalsIgnoreCase("Food")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getFoodPreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			else if(entry.getKey().equalsIgnoreCase("Nature")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getNaturePreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			else if(entry.getKey().equalsIgnoreCase("Music")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getMusicPreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			else if(entry.getKey().equalsIgnoreCase("Shopping")){
+				Map<Place, Float> places = entry.getValue();
+				for(Map.Entry<Place, Float> e : places.entrySet()){					
+					score = e.getValue() * currentUserPreferences.get(0).getShoppingPreference();
+					scaledPlaces.put(e.getKey(), score);
+				}
+				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
+			}
+			scaledPlaces.clear();
+			score = 0;
+		}
+		return scaledPlacesWithCat;
+	}
 }
+
+

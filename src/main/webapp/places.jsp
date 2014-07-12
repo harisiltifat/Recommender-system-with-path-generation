@@ -14,7 +14,7 @@
 	<script>
 		function initialize() {
 		  var rows = document.getElementById("tblPlaces").rows.length;
-		  
+
 		   var lng=document.getElementById(0+"lng").value
 		   var lat=document.getElementById(0+"lat").value
 		   var myLatlng = new google.maps.LatLng(lat,lng);
@@ -23,22 +23,22 @@
 					    zoom: 15,
 					    center: myLatlng,
 					  } ;
-	
+
 		  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		 
+
 		  for(i=0;i<rows;i++){ 
 			   lng=document.getElementById(i+"lng").value
 			  lat=document.getElementById(i+"lat").value
 			  myLatlng = new google.maps.LatLng(lat,lng);
-			 
+
 			   var marker = new google.maps.Marker({
 			      position: myLatlng,
 			      map: map,
 			      title: document.getElementById(i+"name").value
 			  });  
 			  pathCoordinates.push(myLatlng);
-		
-			  
+
+
 		  }
 		  var path = new google.maps.Polyline({
 		        path: pathCoordinates,
@@ -49,8 +49,8 @@
 		  });
 
 		  path.setMap(map); 
-		  
-		  
+
+
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -66,7 +66,7 @@
 
     
 <body>
-	
+
 	<div id="wrapper">
     	<!--  <div id="content">
     	<h2>Recommended Places By Max Likes </h2>
@@ -101,8 +101,8 @@
     			</c:forEach>		
 			</c:forEach>
 		</div>-->
-		
-		<div id="lstPlaces">
+
+		<!-- <div id="lstPlaces">
     	<h2>Categorised Places with Final Popularity Score </h2>
     		<c:set var="count" scope="page" value="0" />
     		<table id="tblPlaces">
@@ -121,9 +121,9 @@
     		</tr>
 			</c:forEach>	
 			</table>	
-		</div>
-		
-		<%-- <div id="content">
+		</div> -->
+
+		<div id="content">
     	<h2>Categorised Places with Final Popularity Score </h2>
     		<c:forEach var="outermap" items="${finalScoredPlacesWithCat}">
     			<b>${outermap.key}</b><br>
@@ -132,10 +132,10 @@
     				<b>Score:</b> ${innermap.value}<br/>
     			</c:forEach>		
 			</c:forEach>		
-		</div>  --%>
+		</div>
 	</div>	
 	<div id="map-canvas"></div>
-	
+
 </body>
 
 </html>

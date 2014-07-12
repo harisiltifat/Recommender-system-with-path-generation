@@ -16,8 +16,6 @@ import de.tum.in.aics.thesis.project.services.interfaces.IPreferencesService;
 @Controller
 public class PreferencesController {
 	
-	private static final int SCALING_FACTOR = 2;
-	
 	@Autowired
 	private IPreferencesService preferencesService;
 	
@@ -30,12 +28,37 @@ public class PreferencesController {
 	@RequestMapping(method = RequestMethod.POST, value = "/savepreferences")
     public String saveUserLocations(HttpServletRequest request) {
 		
-		int museumPreference = Integer.parseInt(request.getParameter("museum")) * SCALING_FACTOR;
-		int nightLifePreference = Integer.parseInt(request.getParameter("nightlife")) * SCALING_FACTOR;
-		int foodPreference = Integer.parseInt(request.getParameter("food")) * SCALING_FACTOR;
-		int naturePreference = Integer.parseInt(request.getParameter("nature")) * SCALING_FACTOR;
-		int musicPreference = Integer.parseInt(request.getParameter("music")) * SCALING_FACTOR;
-		int shoppingPreference = Integer.parseInt(request.getParameter("shopping")) * SCALING_FACTOR;
+		int museumPreference = 0, nightLifePreference = 0, foodPreference = 0, naturePreference = 0, musicPreference = 0, shoppingPreference = 0;
+		
+		if(request.getParameter("museum") != null && !request.getParameter("museum").isEmpty())
+			museumPreference = Integer.parseInt(request.getParameter("museum"));
+		else 
+			museumPreference = 0;
+		
+		if(request.getParameter("nightlife") != null && !request.getParameter("nightlife").isEmpty())
+			nightLifePreference = Integer.parseInt(request.getParameter("nightlife"));
+		else
+			nightLifePreference = 0;
+		
+		if(request.getParameter("food") != null && !request.getParameter("food").isEmpty())
+			foodPreference = Integer.parseInt(request.getParameter("food"));
+		else
+			foodPreference = 0;
+		
+		if(request.getParameter("nature") != null && !request.getParameter("nature").isEmpty())
+			naturePreference = Integer.parseInt(request.getParameter("nature"));
+		else
+			naturePreference = 0;
+		
+		if(request.getParameter("music") != null && !request.getParameter("music").isEmpty())
+			musicPreference = Integer.parseInt(request.getParameter("music"));
+		else
+			musicPreference = 0;
+		
+		if(request.getParameter("shopping") != null && !request.getParameter("shopping").isEmpty())
+			shoppingPreference = Integer.parseInt(request.getParameter("shopping"));
+		else
+			shoppingPreference = 0;
 		
 		UsersPreferences userPreferences = new UsersPreferences();
 		userPreferences.setMuseumPreference(museumPreference);

@@ -1,5 +1,7 @@
 package de.tum.in.aics.thesis.project.services.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,5 +20,10 @@ public class PreferencesServiceImpl implements IPreferencesService {
 	@Override
 	public void savePreferences(UsersPreferences preferences) {
 		preferencesDao.savePreferences(preferences);
+	}
+
+	@Override
+	public List<UsersPreferences> getCurrentPrefernces(int locationId) {
+		return preferencesDao.getCurrentPrefernces(locationId);
 	}
 }
