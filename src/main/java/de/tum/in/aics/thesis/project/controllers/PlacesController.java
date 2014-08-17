@@ -41,6 +41,9 @@ public class PlacesController {
 	private static double SOURCE_LNG = 0.0;
 	private static double DESTINATION_LAT = 0.0;
 	private static double DESTINATION_LNG = 0.0;
+	private static double TIME=0.0;
+	private static double BUDGET=0.0;
+	private static boolean ISTIMEENABLE=false;
 
 	@Autowired
 	private IPlacesService placesService;
@@ -86,6 +89,11 @@ public class PlacesController {
 			SOURCE_LNG = loc.getSourcelong();
 			DESTINATION_LAT = loc.getDestinationlat();
 			DESTINATION_LNG = loc.getDestinationlong();
+			TIME=loc.getTime();
+			BUDGET=loc.getBudget();
+			ISTIMEENABLE=loc.isTimeEnable();
+			System.out.println("Time is:"+TIME+" and budget is:"+BUDGET+" istimeenable is"+ISTIMEENABLE);
+			
 		}
 		Location sourceLoc = new Location(loc.getSourcelat(),loc.getSourcelong());
 		Location destLoc = new Location(loc.getDestinationlat(),loc.getDestinationlong());
@@ -94,8 +102,8 @@ public class PlacesController {
 		ModelAndView model = new ModelAndView("places");
 		if(!places.isEmpty() && places != null){
 			categorizedPlaces = placesService.categorize(places);
-			filteredcategorizedPlaces = filteringService.filterPlaces(categorizedPlaces);
-			sortedCategorisedPlaces = placesService.sortPlacesByName(filteredcategorizedPlaces);
+			//filteredcategorizedPlaces = filteringService.filterPlaces(categorizedPlaces);
+			sortedCategorisedPlaces = placesService.sortPlacesByName(categorizedPlaces);
 	
 			Context context = new Context(new ScoringByMaxCheckinsImpl());
 			scoredPlacesByMaxCheckins = context.executeStrategy(sortedCategorisedPlaces);

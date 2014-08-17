@@ -38,16 +38,24 @@
 				});
 			}
 		}
+		
     </script>
 	<script type="text/javascript">
 	$( document ).ready(function() {
-		
 		var geocoder = new google.maps.Geocoder();
 		var address ;
 		var sourceLat = 0;
 		var sourceLng = 0;
 		var destinationLat = 0;
 		var destinationLng = 0;
+		var time=0;
+		var budget=0;
+		var isTimeEnable=0;
+		   
+		$('#isTimeEnable').change(function(){
+			   $("#time").prop("disabled", !$(this).is(':checked'));
+			   $("#budget").prop("disabled", !$(this).is(':checked'));
+			});
 		
 		$(".savebutton").click(function(){			
 			address = document.getElementById("source").value;
@@ -56,6 +64,10 @@
 			  {
 			  	sourceLat = results[0].geometry.location.lat();
 			    sourceLng = results[0].geometry.location.lng();
+			    time=document.getElementById("time").value;
+			    budget=document.getElementById("budget").value;
+			    isTimeEnable=document.getElementById("isTimeEnable").value;
+			    
 			    address = document.getElementById("destination").value;
 				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK)
@@ -69,7 +81,10 @@
 			       				sourceLat : sourceLat,
 			       				sourceLng : sourceLng, 
 			       				destinationLat : destinationLat,
-			       				destinationLng : destinationLng
+			       				destinationLng : destinationLng,
+			       				time:time,
+			       				budget:budget,
+			       				isTimeEnable:isTimeEnable
 			       			},
 			       			success: function(response) 
 			       			{
@@ -94,7 +109,11 @@
 		<div id="content">
 			<div>
 				<input name = "source" id="source" placeholder="Enter your source" onFocus="geolocate()" type="text"></input><br><br>
-				<input name = "destination" id="destination" placeholder="Enter your destination" onFocus="geolocate()" type="text"></input>
+				<input name = "destination" id="destination" placeholder="Enter your destination" onFocus="geolocate()" type="text"></input><br><br>
+				<input type="checkbox" id="isTimeEnable" name="isTimeEnable" value="0">Proceed with time and budget<br><br>
+				<input name = "time" id="time" name="time" placeholder="Enter your time limit in mins" onFocus="geolocate()" type="text" disabled="" value="0"></input><br><br>
+				<input name = "budget" id="budget" name="budget" placeholder="Enter your budget" onFocus="geolocate()" type="text" disabled="" value="0"></input><br>
+				
 				<div style= "margin-top:10px; width:300px;">
 					<input type="submit" class="savebutton" value = "Next" />
 				</div>

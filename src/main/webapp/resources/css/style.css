@@ -161,14 +161,26 @@ only screen and (min-device-pixel-ratio : 1.5),
 	top:1px;
 }
 /* This button was generated using CSSButtonGenerator.com */
+#source {
+	top: 0px;
+	left: 0px;
+	width: 50%;
+}
 
-  #source {
-        top: 0px;
-        left: 0px;
-        width: 50%;
-      }
-	   #destination {
-        top: 0px;
-        left: 0px;
-        width: 50%;
-      }
+#destination {
+	top: 0px;
+	left: 0px;
+	width: 50%;
+}
+
+#time {
+	top: 0px;
+	left: 0px;
+	width: 30%;
+}
+
+#budget {
+	top: 0px;
+	left: 0px;
+	width: 30%;
+}
