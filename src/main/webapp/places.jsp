@@ -102,7 +102,7 @@
 			</c:forEach>
 		</div>-->
 
-		<!-- <div id="lstPlaces">
+		<div id="lstPlaces">
     	<h2>Categorised Places with Final Popularity Score </h2>
     		<c:set var="count" scope="page" value="0" />
     		<table id="tblPlaces">
@@ -121,18 +121,19 @@
     		</tr>
 			</c:forEach>	
 			</table>	
-		</div> -->
+		</div> 
 
-		<div id="content">
+		<!--  <div id="content">
     	<h2>Categorised Places with Final Popularity Score </h2>
-    		<c:forEach var="outermap" items="${finalScoredPlacesWithCat}">
+    		<c:forEach var="outermap" items="${scoredPlacesByMaxRating}">
     			<b>${outermap.key}</b><br>
     			<c:forEach var="innermap" items="${outermap.value}" >
-    				<b>Name:</b> ${innermap.key.name}    				
+    				<b>Name:</b> ${innermap.key.name} 
+    				<b>Rating:</b> ${innermap.key.rating}    				
     				<b>Score:</b> ${innermap.value}<br/>
     			</c:forEach>		
 			</c:forEach>		
-		</div>
+		</div>-->
 	</div>	
 	<div id="map-canvas"></div>
 

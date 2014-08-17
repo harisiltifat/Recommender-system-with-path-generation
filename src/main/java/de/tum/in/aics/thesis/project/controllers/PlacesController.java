@@ -109,11 +109,15 @@ public class PlacesController {
 	
 			context = new Context(new ScoringByMaxRatingImpl());
 			scoredPlacesByMaxRating = context.executeStrategy(sortedCategorisedPlaces);
+			scoredPlacesByMaxRating = placesService.sortPlacesByScore(scoredPlacesByMaxRating);
 			for (Entry<String, Map<Place, Float>> entry : scoredPlacesByMaxRating.entrySet())
 				maxRatingScoredPlaces.putAll(entry.getValue());
 	
+			
 			int locationId =  (Integer) WebUtils.getSessionAttribute(request, "locationId");
-			List<UsersPreferences> currentUserPreferences = preferencesService.getCurrentPrefernces(locationId);
+			UsersLocation location = new UsersLocation();
+			location.setLocationId(locationId);
+			List<UsersPreferences> currentUserPreferences = preferencesService.getCurrentPrefernces(location);
 			
 			finalScoredPlaces = placesService.mergeScores(maxCheckinsScoredPlaces,maxLikesScoredPlaces, maxRatingScoredPlaces);
 			finalScoredPlacesWithCat = placesService.clusterPlaces(finalScoredPlaces);
@@ -126,9 +130,9 @@ public class PlacesController {
 			
 			// model.addObject("scoredPlacesByMaxCheckins",scoredPlacesByMaxCheckins);
 			// model.addObject("scoredPlacesByMaxLikes", scoredPlacesByMaxLikes);
-			// model.addObject("scoredPlacesByMaxRating", scoredPlacesByMaxRating);
-			model.addObject("finalScoredPlacesWithCat", finalScoredPlacesWithCat);
-			//model.addObject("lstplaces", lstPath);
+			 //model.addObject("scoredPlacesByMaxRating", scoredPlacesByMaxRating);
+			//model.addObject("finalScoredPlacesWithCat", finalScoredPlacesWithCat);
+			model.addObject("lstplaces", lstPath);
 		}
 		else
 		{
@@ -158,3 +162,5 @@ public class PlacesController {
 	}
 
 }
+
+

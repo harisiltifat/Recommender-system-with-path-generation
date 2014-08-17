@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import de.tum.in.aics.thesis.project.models.User;
+import de.tum.in.aics.thesis.project.models.UsersLocation;
 import de.tum.in.aics.thesis.project.models.UsersPreferences;
 import de.tum.in.aics.thesis.project.services.interfaces.IPreferencesService;
 
@@ -59,7 +60,7 @@ public class PreferencesController {
 			shoppingPreference = Integer.parseInt(request.getParameter("shopping"));
 		else
 			shoppingPreference = 0;
-		
+		UsersLocation userlocation = new UsersLocation();
 		UsersPreferences userPreferences = new UsersPreferences();
 		userPreferences.setMuseumPreference(museumPreference);
 		userPreferences.setNightlifePreference(nightLifePreference);
@@ -68,7 +69,8 @@ public class PreferencesController {
 		userPreferences.setMusicPreference(musicPreference);
 		userPreferences.setShoppingPreference(shoppingPreference);
 		userPreferences.setUser((User) WebUtils.getSessionAttribute(request, "user"));
-		userPreferences.setLocationId((Integer) WebUtils.getSessionAttribute(request, "locationId"));
+		userlocation.setLocationId((Integer) WebUtils.getSessionAttribute(request, "locationId"));
+		userPreferences.setUserLoc(userlocation);
 		preferencesService.savePreferences(userPreferences);
 		return "redirect:/places"; 
 	}

@@ -21,7 +21,6 @@ public class UsersPreferences implements Serializable{
 	private int naturePreference;
 	private int musicPreference;
 	private int shoppingPreference;
-	private int locationId;
 	
 	public UsersPreferences(){}
 	
@@ -98,12 +97,16 @@ public class UsersPreferences implements Serializable{
 		return user;
 	}
 
-	public int getLocationId() {
-		return locationId;
+	@ManyToOne
+    @JoinColumn(name = "locationId")
+    private UsersLocation location;
+
+	public UsersLocation getUserLoc() {
+		return location;
 	}
 
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
+	public void setUserLoc(UsersLocation userLoc) {
+		this.location = userLoc;
 	}
 	
 }
