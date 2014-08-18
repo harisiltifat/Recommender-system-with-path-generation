@@ -132,9 +132,55 @@ public class PlacesController {
 			finalScoredPlacesWithCat = placesService.scaleByPreferences(finalScoredPlacesWithCat, currentUserPreferences);
 			finalScoredPlacesWithCat = placesService.sortPlacesByScore(finalScoredPlacesWithCat);
 			
+			for(Entry entryScoredWithCat:finalScoredPlacesWithCat.entrySet()){
+				float costOfPlace=0, timeToSpend=0;
+				String category=(String)entryScoredWithCat.getKey();
+				if(category.equalsIgnoreCase("Art/Museums")){
+					costOfPlace=12;
+					timeToSpend=45;
+				}
+				else if(category.equalsIgnoreCase("Night Life")){
+					costOfPlace=10;
+					timeToSpend=60;
+				}
+				else if(category.equalsIgnoreCase("Food")){
+					costOfPlace=13;
+					timeToSpend=40;
+				}
+				else if(category.equalsIgnoreCase("Nature")){
+					costOfPlace=0;
+					timeToSpend=45;
+				}
+				else if(category.equalsIgnoreCase("Shopping")){
+					costOfPlace=0;
+					timeToSpend=60;
+				}
+				else{
+					costOfPlace=200;
+					timeToSpend=200;
+				}
+				for(Entry entryPlaces:((Map<Place, Float>)entryScoredWithCat.getValue()).entrySet()){
+					Place place=(Place)entryPlaces.getKey();
+					place.setCostOfPlace(costOfPlace);
+					place.setTimeToSpend(timeToSpend);
+				}
+			}
+			//Path finding portions
 			List<Place> lstplaces = ConvertMapToList(finalScoredPlacesWithCat);
-			IPathFindAlgorithm algo = new PathFind_DijkstraDivImpl();
-			List<Place> lstPath = algo.findPath(sourceLoc, destLoc, lstplaces, 0, 0);
+			IPathFindAlgorithm algo;
+			List<Place> lstPath;
+			ISTIMEENABLE=true;
+			if(ISTIMEENABLE){
+				algo = new PathFind_DynammicAlgoImpl();
+				//Parameters:Source,destination,list of places, time, budget
+				lstPath = algo.findPath(sourceLoc, destLoc, lstplaces, 180, 100);
+			}
+			else{
+				algo = new PathFind_DijkstraDivImpl();
+				//Parameters:Source,destination,list of places, time, budget
+				lstPath = algo.findPath(sourceLoc, destLoc, lstplaces, 0, 0);
+			}
+		
 			
 			// model.addObject("scoredPlacesByMaxCheckins",scoredPlacesByMaxCheckins);
 			// model.addObject("scoredPlacesByMaxLikes", scoredPlacesByMaxLikes);

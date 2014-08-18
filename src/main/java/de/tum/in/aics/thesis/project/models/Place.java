@@ -12,6 +12,8 @@ public class Place {
 	private Integer likes;
 	private double latitude;
 	private double longitude;
+	private float costOfPlace;
+	private float timeToSpend;
 	
 	public String getName() {
 		return name;
@@ -91,6 +93,22 @@ public class Place {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+
+	public float getCostOfPlace() {
+		return costOfPlace;
+	}
+
+	public void setCostOfPlace(float costOfPlace) {
+		this.costOfPlace = costOfPlace;
+	}
+
+	public float getTimeToSpend() {
+		return timeToSpend;
+	}
+
+	public void setTimeToSpend(float timeToSpend) {
+		this.timeToSpend = timeToSpend;
 	}
 	
 }
