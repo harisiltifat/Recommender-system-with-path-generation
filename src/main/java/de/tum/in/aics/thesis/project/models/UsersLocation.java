@@ -18,8 +18,8 @@ public class UsersLocation implements Serializable{
 	private double sourcelong;
 	private double destinationlat;
 	private double destinationlong;
-	private double time;
-	private double budget;
+	private float time;
+	private float budget;
 	private boolean isTimeEnable;
 
 	public double getSourcelat() {
@@ -66,19 +66,19 @@ public class UsersLocation implements Serializable{
 		this.locationId = locationId;
 	}
 
-	public double getTime() {
+	public float getTime() {
 		return time;
 	}
 
-	public void setTime(double time) {
+	public void setTime(float time) {
 		this.time = time;
 	}
 
-	public double getBudget() {
+	public float getBudget() {
 		return budget;
 	}
 
-	public void setBudget(double budget) {
+	public void setBudget(float budget) {
 		this.budget = budget;
 	}
 

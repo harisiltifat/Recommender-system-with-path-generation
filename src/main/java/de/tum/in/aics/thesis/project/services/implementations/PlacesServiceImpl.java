@@ -240,6 +240,8 @@ public class PlacesServiceImpl implements IPlacesService {
 		}
 		return scaledPlacesWithCat;
 	}
+	
+	
 }
 
 

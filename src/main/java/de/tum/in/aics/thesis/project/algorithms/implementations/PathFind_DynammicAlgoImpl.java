@@ -24,12 +24,14 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 	Vertex sourceVertex=null;
 	public List<Place> findPath(Location sourceLoc, Location destinationLoc,
 			List<Place> lstplaces, float time, float budget) {
-		// TODO Auto-generated method stub
+		AssignTimeAndCost(lstplaces);
 		CreateGraph(sourceLoc, destinationLoc, lstplaces);
 		Vertex v=null;
 		while (!vertexQueue.isEmpty()) {
 			v = vertexQueue.poll();
 			for(Edge edge:v.getAdjacencies()){
+				if(v.getRating()==0)
+					continue;
 				//Iterating on backward edges only
 				if(edge.isBackwardEdge()){
 					//If the backward node is source then handle specifically
@@ -58,16 +60,19 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 			}
 		}
 		double maximumEntertainment=0;
+	
 		List<Vertex> finalPathVertex=null;
-		
-		for(Entry destinationEntry:destinationVertex.getMapPath().entrySet()){
-			double otherEntertainment=((PathParams)destinationEntry.getValue()).getMaxEntertainment();
-			/*System.out.println("Key is:"+destinationEntry.getKey()+" and ent is:"+((PathParams)destinationEntry.getValue()).getMaxEntertainment()+" and path is:"+((PathParams)destinationEntry.getValue()).lstPath);
-*/			if(otherEntertainment>maximumEntertainment){
-				maximumEntertainment=otherEntertainment;
-				finalPathVertex=((PathParams)destinationEntry.getValue()).lstPath;
-			}
+		Entry destinationEntry=destinationVertex.getMapPath().lastEntry();
+
+		double otherEntertainment=((PathParams)destinationEntry.getValue()).getMaxEntertainment();
+
+		System.out.println("Key is:"+destinationEntry.getKey()+" and ent is:"+((PathParams)destinationEntry.getValue()).getMaxEntertainment()+" and path is:"+((PathParams)destinationEntry.getValue()).lstPath);
+
+		if(otherEntertainment>maximumEntertainment){
+			maximumEntertainment=otherEntertainment;
+			finalPathVertex=((PathParams)destinationEntry.getValue()).lstPath;
 		}
+
 		
 		List<Place> lstPathPlaces=new ArrayList<Place>();
 		for(Vertex vertex:finalPathVertex){
@@ -76,6 +81,18 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 		
 		lstPathPlaces.add(createPlace(destinationVertex));
 		return lstPathPlaces;
+	}
+
+	private int CountCategories(List<Vertex> lstPath) {
+		int categoryCounter=0;
+		List<String> lstCategory=new ArrayList<String>();
+		for(Vertex vertex:lstPath){
+			if(!lstCategory.contains(vertex.getCategory())){
+				lstCategory.add(vertex.getCategory());
+				categoryCounter++;
+			}
+		}
+		return categoryCounter;
 	}
 
 	private void performComparisionSteps(float time, float budget, Vertex v,
@@ -198,6 +215,7 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 		vertex.setLat(place.getLatitude());
 		vertex.setTimeToSpend(place.getTimeToSpend());
 		vertex.setCostOfVertex(place.getCostOfPlace());
+		vertex.setCategory(place.getCategory());
 		return vertex;
 	}
 	
@@ -245,8 +263,12 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 	private void findLargerKey(Vertex currentVertex, Map.Entry<Double,PathParams> keyValuePair){
 		while(true){
 			Double largerKey=currentVertex.getMapPath().higherKey(keyValuePair.getKey());
+			
+			
 			if(largerKey!=null){
-				if(currentVertex.getMapPath().get(largerKey).getMaxEntertainment()<=keyValuePair.getValue().getMaxEntertainment()){
+				int categoryCount = CountCategories(currentVertex.getMapPath().get(largerKey).lstPath);
+				int newCategoryCount=CountCategories(keyValuePair.getValue().lstPath);
+				if(categoryCount * currentVertex.getMapPath().get(largerKey).getMaxEntertainment()<=newCategoryCount * keyValuePair.getValue().getMaxEntertainment()){
 					currentVertex.getMapPath().remove(largerKey);
 				}
 				else
@@ -263,12 +285,56 @@ public class PathFind_DynammicAlgoImpl implements IPathFindAlgorithm {
 			currentVertex.getMapPath().put(keyValuePair.getKey(), keyValuePair.getValue());
 			return true;
 		}
+		
+		int categoryCount = CountCategories(currentVertex.getMapPath().get(smallerKey).lstPath);
+		int newCategoryCount=CountCategories(keyValuePair.getValue().lstPath);
 			
-		if(currentVertex.getMapPath().get(smallerKey).getMaxEntertainment()<keyValuePair.getValue().getMaxEntertainment()){
+		if(categoryCount*currentVertex.getMapPath().get(smallerKey).getMaxEntertainment()<newCategoryCount*keyValuePair.getValue().getMaxEntertainment()){
 			currentVertex.getMapPath().put(keyValuePair.getKey(), keyValuePair.getValue());
 			return true;
 		}
 			
 		return false;
+	}
+	
+	private void AssignTimeAndCost(List<Place> lstPlaces){
+		float costOfPlace=0, timeToSpend=0;
+		for(Place place:lstPlaces){
+			String category= place.getCategory();
+			if(category.equalsIgnoreCase("Museum")){
+				costOfPlace=12;
+				timeToSpend=45;
+			}
+			else if(category.equalsIgnoreCase("Night Life")){
+				costOfPlace=10;
+				timeToSpend=60;
+			}
+			else if(category.equalsIgnoreCase("Food")){
+				costOfPlace=13;
+				timeToSpend=40;
+			}
+			else if(category.equalsIgnoreCase("Nature")){
+				costOfPlace=0;
+				timeToSpend=45;
+			}
+			else if(category.equalsIgnoreCase("Music")){
+				costOfPlace=15;
+				timeToSpend=50;
+			}
+			else if(category.equalsIgnoreCase("Shopping")){
+				costOfPlace=0;
+				timeToSpend=60;
+			}
+			else{
+				System.out.println("I am out,category is: "+place.getCategory());
+				costOfPlace=200;
+				timeToSpend=200;
+			}
+
+
+			place.setCostOfPlace(costOfPlace);
+			place.setTimeToSpend(timeToSpend);
+
+		}
 	}
 }

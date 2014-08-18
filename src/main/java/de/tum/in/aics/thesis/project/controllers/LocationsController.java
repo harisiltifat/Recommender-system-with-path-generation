@@ -27,7 +27,7 @@ public class LocationsController {
 	}
 		
 	@RequestMapping(method = RequestMethod.POST, value = "/savelocation")
-    public @ResponseBody String saveUserLocations(HttpServletRequest request, @RequestParam(value = "sourceLat" ) double sourceLat, @RequestParam(value = "sourceLng" ) double sourceLng, @RequestParam(value = "destinationLat" ) double destinationLat, @RequestParam(value = "destinationLng" ) double destinationLng, @RequestParam(value = "time" ) double time, @RequestParam(value = "budget" ) double budget, @RequestParam(value = "isTimeEnable" ) boolean isTimeEnable) {
+    public @ResponseBody String saveUserLocations(HttpServletRequest request, @RequestParam(value = "sourceLat" ) double sourceLat, @RequestParam(value = "sourceLng" ) double sourceLng, @RequestParam(value = "destinationLat" ) double destinationLat, @RequestParam(value = "destinationLng" ) double destinationLng, @RequestParam(value = "time" ) float time, @RequestParam(value = "budget" ) float budget, @RequestParam(value = "isTimeEnable" ) boolean isTimeEnable) {
 		UsersLocation userLocation = new UsersLocation();
 		userLocation.setSourcelat(sourceLat);
 		userLocation.setSourcelong(sourceLng);

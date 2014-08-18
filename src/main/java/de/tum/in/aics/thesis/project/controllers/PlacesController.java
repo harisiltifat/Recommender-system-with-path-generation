@@ -41,8 +41,8 @@ public class PlacesController {
 	private static double SOURCE_LNG = 0.0;
 	private static double DESTINATION_LAT = 0.0;
 	private static double DESTINATION_LNG = 0.0;
-	private static double TIME=0.0;
-	private static double BUDGET=0.0;
+	private static float TIME=0;
+	private static float BUDGET=0;
 	private static boolean ISTIMEENABLE=false;
 
 	@Autowired
@@ -132,48 +132,15 @@ public class PlacesController {
 			finalScoredPlacesWithCat = placesService.scaleByPreferences(finalScoredPlacesWithCat, currentUserPreferences);
 			finalScoredPlacesWithCat = placesService.sortPlacesByScore(finalScoredPlacesWithCat);
 			
-			for(Entry entryScoredWithCat:finalScoredPlacesWithCat.entrySet()){
-				float costOfPlace=0, timeToSpend=0;
-				String category=(String)entryScoredWithCat.getKey();
-				if(category.equalsIgnoreCase("Art/Museums")){
-					costOfPlace=12;
-					timeToSpend=45;
-				}
-				else if(category.equalsIgnoreCase("Night Life")){
-					costOfPlace=10;
-					timeToSpend=60;
-				}
-				else if(category.equalsIgnoreCase("Food")){
-					costOfPlace=13;
-					timeToSpend=40;
-				}
-				else if(category.equalsIgnoreCase("Nature")){
-					costOfPlace=0;
-					timeToSpend=45;
-				}
-				else if(category.equalsIgnoreCase("Shopping")){
-					costOfPlace=0;
-					timeToSpend=60;
-				}
-				else{
-					costOfPlace=200;
-					timeToSpend=200;
-				}
-				for(Entry entryPlaces:((Map<Place, Float>)entryScoredWithCat.getValue()).entrySet()){
-					Place place=(Place)entryPlaces.getKey();
-					place.setCostOfPlace(costOfPlace);
-					place.setTimeToSpend(timeToSpend);
-				}
-			}
 			//Path finding portions
 			List<Place> lstplaces = ConvertMapToList(finalScoredPlacesWithCat);
 			IPathFindAlgorithm algo;
 			List<Place> lstPath;
-			ISTIMEENABLE=true;
+			//ISTIMEENABLE=true;
 			if(ISTIMEENABLE){
 				algo = new PathFind_DynammicAlgoImpl();
 				//Parameters:Source,destination,list of places, time, budget
-				lstPath = algo.findPath(sourceLoc, destLoc, lstplaces, 180, 100);
+				lstPath = algo.findPath(sourceLoc, destLoc, lstplaces, TIME, BUDGET);
 			}
 			else{
 				algo = new PathFind_DijkstraDivImpl();
@@ -196,19 +163,25 @@ public class PlacesController {
 		return model;
 	}
 
+	
+
 	@SuppressWarnings("rawtypes")
 	private List<Place> ConvertMapToList(Map<String, Map<Place, Float>> finalScoredPlacesWithCat) {
+		
 		List<Place> lstplaces = new ArrayList<Place>();
 		Iterator outerIterator = finalScoredPlacesWithCat.entrySet().iterator();
+		
 		while (outerIterator.hasNext()) {
 			Map.Entry pairs = (Map.Entry) outerIterator.next();
 			Map outerPlacesMap = (Map) pairs.getValue();
+			String category=(String)pairs.getKey();
 			Iterator innterIteratorPlaces = outerPlacesMap.entrySet().iterator();
 			while (innterIteratorPlaces.hasNext()) {
 				Map.Entry pairs2 = (Map.Entry) innterIteratorPlaces.next();
 				Float rating = (Float) pairs2.getValue();
 				Place place = (Place) pairs2.getKey();
 				place.setRating(rating);
+				place.setCategory(category);
 				lstplaces.add(place);
 			}
 		}

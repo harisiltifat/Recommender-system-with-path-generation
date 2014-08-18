@@ -14,6 +14,7 @@ public class Place {
 	private double longitude;
 	private float costOfPlace;
 	private float timeToSpend;
+	private String category;
 	
 	public String getName() {
 		return name;
@@ -109,6 +110,14 @@ public class Place {
 
 	public void setTimeToSpend(float timeToSpend) {
 		this.timeToSpend = timeToSpend;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

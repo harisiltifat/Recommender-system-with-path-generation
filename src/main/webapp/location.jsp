@@ -110,9 +110,9 @@
 			<div>
 				<input name = "source" id="source" placeholder="Enter your source" onFocus="geolocate()" type="text"></input><br><br>
 				<input name = "destination" id="destination" placeholder="Enter your destination" onFocus="geolocate()" type="text"></input><br><br>
-				<input type="checkbox" id="isTimeEnable" name="isTimeEnable" value="0">Proceed with time and budget<br><br>
-				<input name = "time" id="time" name="time" placeholder="Enter your time limit in mins" onFocus="geolocate()" type="text" disabled="" value="0"></input><br><br>
-				<input name = "budget" id="budget" name="budget" placeholder="Enter your budget" onFocus="geolocate()" type="text" disabled="" value="0"></input><br>
+				<input type="checkbox" id="isTimeEnable" name="isTimeEnable">Proceed with time and budget<br><br>
+				<input name = "time" id="time" name="time" placeholder="Enter your time limit in mins" onFocus="geolocate()" type="text" disabled="" value="180"></input><br><br>
+				<input name = "budget" id="budget" name="budget" placeholder="Enter your budget" onFocus="geolocate()" type="text" disabled="" value="100"></input><br>
 				
 				<div style= "margin-top:10px; width:300px;">
 					<input type="submit" class="savebutton" value = "Next" />
