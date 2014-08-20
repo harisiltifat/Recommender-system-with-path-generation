@@ -190,7 +190,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			if(entry.getKey().equalsIgnoreCase("Museum")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getMuseumPreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getMuseumPreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMuseumPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -198,7 +199,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Night life")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getNightlifePreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getNightlifePreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNightlifePreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -206,7 +208,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Food")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getFoodPreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getFoodPreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getFoodPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -214,7 +217,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Nature")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getNaturePreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getNaturePreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNaturePreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -222,7 +226,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Music")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getMusicPreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getMusicPreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMusicPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -230,7 +235,8 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Shopping")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					score = e.getValue() * currentUserPreferences.get(0).getShoppingPreference();
+					//score = e.getValue() * currentUserPreferences.get(0).getShoppingPreference();
+					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getShoppingPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -241,7 +247,31 @@ public class PlacesServiceImpl implements IPlacesService {
 		return scaledPlacesWithCat;
 	}
 	
+	private float GetMultiplicativeScore(float score,int preferences){
 	
+		switch(preferences){
+		case(5):
+			score=score+(score*0.24f);
+		break;
+		case(4):
+			score=score+(score*0.18f);
+		break;
+		case(3):
+			score=score+(score*0.12f);
+		break;
+		case(2):
+			score=score+(score*0.06f);
+		break;
+		case(1):
+			score=score+(score*0.01f);
+		break;
+		default:
+			score=0f;
+		break;
+		}
+
+		return score;
+	}
 }
 
 

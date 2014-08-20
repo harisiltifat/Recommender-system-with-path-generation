@@ -136,7 +136,7 @@ public class PlacesController {
 			List<Place> lstplaces = ConvertMapToList(finalScoredPlacesWithCat);
 			IPathFindAlgorithm algo;
 			List<Place> lstPath;
-			//ISTIMEENABLE=true;
+
 			if(ISTIMEENABLE){
 				algo = new PathFind_DynammicAlgoImpl();
 				//Parameters:Source,destination,list of places, time, budget

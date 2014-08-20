@@ -66,7 +66,8 @@
 			    sourceLng = results[0].geometry.location.lng();
 			    time=document.getElementById("time").value;
 			    budget=document.getElementById("budget").value;
-			    isTimeEnable=document.getElementById("isTimeEnable").value;
+			    //isTimeEnable=document.getElementById("isTimeEnable").value;
+			    isTimeEnable=$('#isTimeEnable').prop("checked");
 			    
 			    address = document.getElementById("destination").value;
 				geocoder.geocode( { 'address': address}, function(results, status) {
