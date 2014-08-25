@@ -92,7 +92,7 @@ public class PlacesController {
 			TIME=loc.getTime();
 			BUDGET=loc.getBudget();
 			ISTIMEENABLE=loc.isTimeEnable();
-			System.out.println("Time is:"+TIME+" and budget is:"+BUDGET+" istimeenable is"+ISTIMEENABLE);
+			//System.out.println("Time is:"+TIME+" and budget is:"+BUDGET+" istimeenable is"+ISTIMEENABLE);
 			
 		}
 		Location sourceLoc = new Location(loc.getSourcelat(),loc.getSourcelong());
@@ -129,7 +129,7 @@ public class PlacesController {
 			
 			finalScoredPlaces = placesService.mergeScores(maxCheckinsScoredPlaces,maxLikesScoredPlaces, maxRatingScoredPlaces);
 			finalScoredPlacesWithCat = placesService.clusterPlaces(finalScoredPlaces);
-			finalScoredPlacesWithCat = placesService.scaleByPreferences(finalScoredPlacesWithCat, currentUserPreferences);
+			finalScoredPlacesWithCat = placesService.scaleByPreferences(request, finalScoredPlacesWithCat, currentUserPreferences);
 			finalScoredPlacesWithCat = placesService.sortPlacesByScore(finalScoredPlacesWithCat);
 			
 			//Path finding portions

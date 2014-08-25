@@ -20,7 +20,7 @@
 		   var myLatlng = new google.maps.LatLng(lat,lng);
 		   var pathCoordinates= [];
 		   var mapOptions = {
-					    zoom: 15,
+					    zoom: 16,
 					    center: myLatlng,
 					  } ;
 
@@ -55,88 +55,41 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 	<title>Places</title>
-	<style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 100px;
-        padding: 15px
-      }
-    </style>
 </head>
 
     
 <body>
 
 	<div id="wrapper">
-    	<!--  <div id="content">
-    	<h2>Recommended Places By Max Likes </h2>
-			<c:forEach var="outermap" items="${scoredPlacesByMaxLikes}">
-    			<b>${outermap.key}</b><br>
-    			<c:forEach var="innermap" items="${outermap.value}" >
-    				<b>Name:</b> ${innermap.key.name}
-    				<b>Likes:</b> ${innermap.key.likes}
-    				<b>Score:</b> ${innermap.value}<br/>
-    			</c:forEach>		
-			</c:forEach>
-		</div>-->
-			<!--<div id="content">
-    	<h2>Recommended Places By Max Likes </h2>
-			<c:forEach var="outermap" items="${scoredPlacesByMaxLikes}">
-    			<b>${outermap.key}</b><br>
-    			<c:forEach var="innermap" items="${outermap.value}" >
-    				<b>Name:</b> ${innermap.key.name}
-    				<b>Likes:</b> ${innermap.key.likes}
-    				<b>Score:</b> ${innermap.value}<br/>
-    			</c:forEach>		
-			</c:forEach>
-		</div>-->
-	  <!--  <div id="content">
-    	<h2>Recommended Places By Opening Times </h2>
-			<c:forEach var="outermap" items="${scoredPlacesByOpeningTime}">
-    			<b>${outermap.key}</b><br>
-    			<c:forEach var="innermap" items="${outermap.value}" >
-    				<b>Name:</b> ${innermap.key.name}
-    				<b>Opening Status:</b> ${innermap.key.openNow}
-    				<b>Score:</b> ${innermap.value}<br/>
-    			</c:forEach>		
-			</c:forEach>
-		</div>-->
-
-		<div id="lstPlaces">
-    	<h2>Categorised Places with Final Popularity Score </h2>
-    		<c:set var="count" scope="page" value="0" />
-    		<table id="tblPlaces">
-    		<c:forEach var="places" items="${lstplaces}">
-    		<tr>
-    			<td><b>${places.name}</b></td>
-    			<td>${places.types}</td>
-    			<td>${places.rating}</td>
-    			<c:set var="idlng" scope="page" value="${count}lng" />
-    			<c:set var="idlat" scope="page" value="${count}lat" />
-    			<c:set var="idname" scope="page" value="${count}name" />
-    			<td><input type="hidden" id="${idlng}" value="${places.longitude}" /></td>
-    			<td><input type="hidden" id="${idlat}" value="${places.latitude}" /></td>
-    			<td><input type="hidden" id="${idname}" value="${places.name}" /></td>
-    			<c:set var="count" scope="page" value="${count+1}" />
-    		</tr>
-			</c:forEach>	
-			</table>	
-		</div> 
-
-		<!--  <div id="content">
-    	<h2>Categorised Places with Final Popularity Score </h2>
-    		<c:forEach var="outermap" items="${scoredPlacesByMaxRating}">
-    			<b>${outermap.key}</b><br>
-    			<c:forEach var="innermap" items="${outermap.value}" >
-    				<b>Name:</b> ${innermap.key.name} 
-    				<b>Rating:</b> ${innermap.key.rating}    				
-    				<b>Score:</b> ${innermap.value}<br/>
-    			</c:forEach>		
-			</c:forEach>		
-		</div>-->
-	</div>	
-	<div id="map-canvas"></div>
-
+		<div id="content">
+			<div id="lstPlaces">
+				<h2>Categorised Places with Final Popularity Score</h2>
+				<c:set var="count" scope="page" value="0" />
+				<table id="tblPlaces">
+					<c:forEach var="places" items="${lstplaces}">
+						<tr>
+							<td><b>${places.name}</b></td>
+							<td>${places.types}</td>
+							<td>${places.rating}</td>
+							<c:set var="idlng" scope="page" value="${count}lng" />
+							<c:set var="idlat" scope="page" value="${count}lat" />
+							<c:set var="idname" scope="page" value="${count}name" />
+							<td><input type="hidden" id="${idlng}"
+								value="${places.longitude}" /></td>
+							<td><input type="hidden" id="${idlat}"
+								value="${places.latitude}" /></td>
+							<td><input type="hidden" id="${idname}"
+								value="${places.name}" /></td>
+							<c:set var="count" scope="page" value="${count+1}" />
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="map">	
+		<div id = "map-canvas"></div>
+	</div>
 </body>
 
 </html>

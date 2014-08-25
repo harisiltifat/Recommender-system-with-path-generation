@@ -12,15 +12,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import de.tum.in.aics.thesis.project.models.Place;
+import de.tum.in.aics.thesis.project.models.UsersLocation;
 import de.tum.in.aics.thesis.project.models.UsersPreferences;
+import de.tum.in.aics.thesis.project.services.interfaces.ILocationsService;
 import de.tum.in.aics.thesis.project.services.interfaces.IPlacesService;
 
 @Component
 public class PlacesServiceImpl implements IPlacesService {
 
+	@Autowired
+	private ILocationsService locationService;
+	private static boolean ISTIMEENABLE=false;
 	
 	public Map< String, List<Place> > categorize(List<Place> places){
 	
@@ -179,46 +188,62 @@ public class PlacesServiceImpl implements IPlacesService {
 	}
 
 	@Override
-	public Map<String, Map<Place, Float>> scaleByPreferences(Map<String, Map<Place, Float>> finalScoredPlacesWithCat, List<UsersPreferences> currentUserPreferences) {
+	public Map<String, Map<Place, Float>> scaleByPreferences(HttpServletRequest request, Map<String, Map<Place, Float>> finalScoredPlacesWithCat, List<UsersPreferences> currentUserPreferences) {
 		
 		float score = 0;
 		Map< String , Map<Place, Float> > scaledPlacesWithCat = new LinkedHashMap<String, Map<Place, Float>>();
 		Map<Place, Float> scaledPlaces = new LinkedHashMap<Place, Float>();
-		
+		int currentLocationId = (Integer) WebUtils.getSessionAttribute(request,"locationId");
+		List<UsersLocation> currentLocation = locationService.findCurrentLocation(currentLocationId);
+		UsersLocation loc = null;
+		System.out.print("Current Location size: " + currentLocation.size());
+		if (!currentLocation.isEmpty()) {
+			loc = currentLocation.get(0);	
+			ISTIMEENABLE=loc.isTimeEnable();
+			System.out.print("Is time enable:" + ISTIMEENABLE);
+		}
 		for(Entry<String, Map<Place,Float>> entry : finalScoredPlacesWithCat.entrySet() ){
 			
 			if(entry.getKey().equalsIgnoreCase("Museum")){
 				Map<Place, Float> places = entry.getValue();
-				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getMuseumPreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMuseumPreference());
+				for(Map.Entry<Place, Float> e : places.entrySet()){	
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getMuseumPreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMuseumPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
 			}
 			else if(entry.getKey().equalsIgnoreCase("Night life")){
 				Map<Place, Float> places = entry.getValue();
-				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getNightlifePreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNightlifePreference());
+				for(Map.Entry<Place, Float> e : places.entrySet()){	
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getNightlifePreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNightlifePreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
 			}
 			else if(entry.getKey().equalsIgnoreCase("Food")){
 				Map<Place, Float> places = entry.getValue();
-				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getFoodPreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getFoodPreference());
+				for(Map.Entry<Place, Float> e : places.entrySet()){
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getFoodPreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getFoodPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
 			}
 			else if(entry.getKey().equalsIgnoreCase("Nature")){
 				Map<Place, Float> places = entry.getValue();
-				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getNaturePreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNaturePreference());
+				for(Map.Entry<Place, Float> e : places.entrySet()){	
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getNaturePreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getNaturePreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
@@ -226,17 +251,21 @@ public class PlacesServiceImpl implements IPlacesService {
 			else if(entry.getKey().equalsIgnoreCase("Music")){
 				Map<Place, Float> places = entry.getValue();
 				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getMusicPreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMusicPreference());
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getMusicPreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getMusicPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
 			}
 			else if(entry.getKey().equalsIgnoreCase("Shopping")){
 				Map<Place, Float> places = entry.getValue();
-				for(Map.Entry<Place, Float> e : places.entrySet()){					
-					//score = e.getValue() * currentUserPreferences.get(0).getShoppingPreference();
-					score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getShoppingPreference());
+				for(Map.Entry<Place, Float> e : places.entrySet()){			
+					if(!ISTIMEENABLE)
+						score = e.getValue() * currentUserPreferences.get(0).getShoppingPreference();
+					else
+						score = GetMultiplicativeScore(e.getValue(),currentUserPreferences.get(0).getShoppingPreference());
 					scaledPlaces.put(e.getKey(), score);
 				}
 				scaledPlacesWithCat.put(entry.getKey(), new LinkedHashMap<Place, Float>(scaledPlaces));
