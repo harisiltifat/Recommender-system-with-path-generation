@@ -1,11 +1,12 @@
 package de.tum.in.aics.thesis.project.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import de.tum.in.aics.thesis.project.models.Place;
-
-
 
 public class Vertex implements Comparable<Vertex> {
 		private  String name;
@@ -23,6 +24,13 @@ public class Vertex implements Comparable<Vertex> {
 	    private String types;
 	    private boolean openNow;
 	    private boolean explored=false;
+	    private String category;
+	    
+	    //extra added
+	    private TreeMap<Double,PathParams> mapPath=new TreeMap<Double,PathParams>();
+	    
+	    private float costOfVertex;
+	    private float timeToSpend;
 	    
 	    public String toString() { return getName(); }
 	    
@@ -128,6 +136,7 @@ public class Vertex implements Comparable<Vertex> {
 
 		public void setMaxEntertainment(double maxEntertainment) {
 			this.maxEntertainment = maxEntertainment;
+			
 		}
 
 		public double getDistanceFromSource() {
@@ -146,4 +155,33 @@ public class Vertex implements Comparable<Vertex> {
 			this.explored = explored;
 		}
 
+		public float getCostOfVertex() {
+			return costOfVertex;
+		}
+
+		public void setCostOfVertex(float costOfVertex) {
+			this.costOfVertex = costOfVertex;
+		}
+
+		public TreeMap<Double,PathParams> getMapPath() {
+			return mapPath;
+		}
+
+		public float getTimeToSpend() {
+			return timeToSpend;
+		}
+
+		public void setTimeToSpend(float timeToSpend) {
+			this.timeToSpend = timeToSpend;
+		}
+
+		public String getCategory() {
+			return category;
+		}
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+	
 }
