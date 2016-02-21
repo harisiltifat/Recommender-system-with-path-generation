@@ -61,7 +61,10 @@ public class PathFind_DijkstraDivImpl implements IPathFindAlgorithm {
 		Collections.reverse(path);
 		return path;
 	}
-
+	
+	/**
+	 * Find paths from source location to destination location. Returns the path in the form of list of places.
+	 * */
 	public List<Place> findPath(Location sourceLoc, Location destinationLoc,
 			List<Place> lstplaces, float time, float budget) 
 			{
