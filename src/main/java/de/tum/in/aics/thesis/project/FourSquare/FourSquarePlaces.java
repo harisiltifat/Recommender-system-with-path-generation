@@ -24,7 +24,11 @@ public class FourSquarePlaces {
 	private static final Integer ZERO_LIKES = 0;
 	
 	public FourSquarePlaces(){}
-
+	
+	/**
+	 *Search the places within the desired radius. lat and lng represents the coordinates of the position. Returns the
+	 * List of places
+	 */
 	public ArrayList<Place> search(double lat, double lng, int radius,String categoriesID, int limit) {
 
 		ArrayList<Place> resultList = null;
@@ -67,7 +71,6 @@ public class FourSquarePlaces {
 			JSONObject ResponseJsonObj = new JSONObject(jsonObj.get("response").toString());
 			JSONArray predsJsonArray = ResponseJsonObj.getJSONArray("venues");
 
-			// System.out.print(predsJsonArray);
 			// Extract the Place descriptions from the results
 			resultList = new ArrayList<Place>(predsJsonArray.length());
 			for (int i = 0; i < predsJsonArray.length(); i++) {
@@ -88,30 +91,6 @@ public class FourSquarePlaces {
 				JSONObject stats = predsJsonArray.getJSONObject(i).getJSONObject("stats");
 				place.setStats((Integer) stats.get("checkinsCount"));
 
-				/*
-				 * JSONObject likes =
-				 * predsJsonArray.getJSONObject(i).getJSONObject("likes");
-				 * place.setLikes(likes.get("count").toString());
-				 * place.setLikes(
-				 * predsJsonArray.getJSONObject(i).getString("likes"));
-				 * 
-				 * if (predsJsonArray.getJSONObject(i).has("hours")){
-				 * place.setOpening_hours
-				 * (predsJsonArray.getJSONObject(i).getString("hours")); }
-				 * 
-				 * if (predsJsonArray.getJSONObject(i).has("opening_hours")) {
-				 * place
-				 * .setOpening_hours(predsJsonArray.getJSONObject(i).getString
-				 * ("opening_hours"));
-				 * place.setOpen_now(predsJsonArray.getJSONObject
-				 * (i).getBoolean("open_now")); } if
-				 * (predsJsonArray.getJSONObject(i).has("price_level")) {
-				 * place.setPrice_level
-				 * (predsJsonArray.getJSONObject(i).getString("price_level")); }
-				 * if (predsJsonArray.getJSONObject(i).has("rating")){
-				 * place.setRating
-				 * (predsJsonArray.getJSONObject(i).getString("rating")); }
-				 */
 				resultList.add(place);
 			}
 		} catch (JSONException e) {
@@ -121,6 +100,11 @@ public class FourSquarePlaces {
 		return resultList;
 	}
 
+	/**
+	 *Search the places within the desired radius. It uses different technique.
+	 * lat and lng represents the coordinates of the position. Returns the
+	 * List of places
+	 */
 	public ArrayList<Place> explore(double lat, double lng, int radius, int limit) {
 
 		ArrayList<Place> resultList = null;
